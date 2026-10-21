@@ -8,9 +8,20 @@ from app.api.customers import router as customer_router
 from app.api.orders import router as orders_router
 from app.api.tickets import router as tickets_router
 from app.api.agent import router as agent_router
+from fastapi.middleware.cors import CORSMiddleware
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="AI SupportOps")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(auth_router)
 app.include_router(customer_router)
